@@ -422,7 +422,7 @@ button {
   <canvas id="sig" class="signature-box"></canvas>
 
   <div class="signature-actions">
-    <button type="button" onclick="location.href='Odontograph.html'">🦷 Open Odontograph</button>
+    <button type="button" onclick="openOdontograph()">🦷 Open Odontograph</button>
     <button type="button" onclick="clearSig()">Clear Signature</button>
   </div>
 </div>
@@ -552,13 +552,14 @@ function generatePDF() {
 
 <script>
 function openOdontograph() {
-  window.open("odontograph.html", "_blank");
+  window.location.href = "Odontograph.html";
 }
 </script>
 
 
 </body>
 </html>
+
 
 
 
