@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>DENTAL RECORD</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+body {
+    margin: 0;
+    padding: 40px 20px;
+    background: #f2f4f7;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+/* Main white card */
+.record-container {
+    background: #ffffff;
+    width: 720px;
+    padding: 30px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* Title */
+.record-title {
+    text-align: center;
+    margin: 0 0 20px;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    color: #333;
+}
+
+/* Canvas styling */
+.canvas-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+canvas {
+    border: 1px solid #999;
+    background: #fff;
+}
+
+/* Notes section */
+.notes-container {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.notes-container label {
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+.notes-container textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background: #fcfcfc;
+}
+
+.notes-container textarea:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74,144,226,0.15);
+}
+</style>
+
+
+    <script src="js/engine.js" type="text/javascript"></script>
+</head>
+
+<body oncontextmenu="return false;">
+
+    <div class="record-container">
+        <h1 class="record-title">Dental Chart</h1>
+
+        <div class="canvas-wrapper">
+            <canvas id="canvas" width="648" height="800"></canvas>
+        </div>
+
+        <div class="notes-container">
+            <label for="odontographNotes">Additional Notes</label>
+            <textarea id="odontographNotes" placeholder="Enter any additional notes here..."></textarea>
+            <div style="margin-top:15px;">
+            <button type="button" onclick="window.location='patient-form.html'">⬅ Back</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var canvas = document.getElementById('canvas');
+        var engine = new Engine();
+
+        engine.setCanvas(canvas);
+        engine.init();
+
+        canvas.addEventListener('mousedown', function (event) {
+            engine.onMouseClick(event);
+        }, false);
+
+        canvas.addEventListener('mousemove', function (event) {
+            engine.onMouseMove(event);
+        }, false);
+
+        window.addEventListener('keydown', function (event) {
+            engine.onButtonClick(event);
+        }, false);
+
+        engine.loadPatientData(
+            "New York",
+            "Bardur Thomsen",
+            "1002",
+            "hc 001",
+            "26/02/2018",
+            "dentist one",
+            "Test observations",
+            "Test specifications"
+        );
+
+        function getNotes() {
+            return document.getElementById("odontographNotes").value;
+        }
+    </script>
+
+</body>
+
+
+</html>
