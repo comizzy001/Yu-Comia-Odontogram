@@ -18,6 +18,12 @@ function TextBox() {
     this.text = "";
     this.rect = new Rect();
     this.touching = false;
+    
+    // Additional textboxes
+    this.textBoxAbove = new Rect();
+    this.textAbove = "";
+    this.textBoxBelow = new Rect();
+    this.textBelow = "";
 }
 
 /**
@@ -36,6 +42,18 @@ TextBox.prototype.setDimens = function (x, y, width, height) {
     this.rect.height = height;
     this.text = "";
     this.label = "";
+    
+    // Set dimensions for textbox above (offset by negative height)
+    this.textBoxAbove.x = x;
+    this.textBoxAbove.y = y - height;
+    this.textBoxAbove.width = width;
+    this.textBoxAbove.height = height;
+    
+    // Set dimensions for textbox below (offset by positive height)
+    this.textBoxBelow.x = x;
+    this.textBoxBelow.y = y + height;
+    this.textBoxBelow.width = width;
+    this.textBoxBelow.height = height;
 };
 
 /**
@@ -46,6 +64,26 @@ TextBox.prototype.setDimens = function (x, y, width, height) {
 TextBox.prototype.setText = function (text) {
     "use strict";
     this.text = text;
+};
+
+/**
+ * Method to set the text for the textbox above
+ * @param {type} text string to draw
+ * @returns {undefined}
+ */
+TextBox.prototype.setTextAbove = function (text) {
+    "use strict";
+    this.textAbove = text;
+};
+
+/**
+ * Method to set the text for the textbox below
+ * @param {type} text string to draw
+ * @returns {undefined}
+ */
+TextBox.prototype.setTextBelow = function (text) {
+    "use strict";
+    this.textBelow = text;
 };
 
 TextBox.prototype.setLabel = function (label) {
@@ -117,6 +155,72 @@ TextBox.prototype.drawText = function (context, color) {
 };
 
 /**
+ * Draw text on textbox above
+ * @param {type} context canvas to draw on
+ * @param {type} color color of the text to draw
+ * @returns {void}
+ */
+TextBox.prototype.drawTextAbove = function (context, color) {
+    "use strict";
+    context.beginPath();
+
+    // if there is text, create a white background
+    if (this.textAbove !== "") {
+        context.fillStyle = "#ffffff";
+        context.fillRect(this.textBoxAbove.x,
+                this.textBoxAbove.y,
+                this.textBoxAbove.width,
+                this.textBoxAbove.height);
+    }
+
+    this.textBoxAbove.outline(context, "#000000");
+    
+    context.textAlign = "center";
+    context.fillStyle = color;
+    context.font = "13px Arial";
+
+    context.fillText(this.textAbove,
+            this.textBoxAbove.x + this.textBoxAbove.width / 2,
+            this.textBoxAbove.y + this.textBoxAbove.height - 4);
+
+    context.stroke();
+    context.restore();
+};
+
+/**
+ * Draw text on textbox below
+ * @param {type} context canvas to draw on
+ * @param {type} color color of the text to draw
+ * @returns {void}
+ */
+TextBox.prototype.drawTextBelow = function (context, color) {
+    "use strict";
+    context.beginPath();
+
+    // if there is text, create a white background
+    if (this.textBelow !== "") {
+        context.fillStyle = "#ffffff";
+        context.fillRect(this.textBoxBelow.x,
+                this.textBoxBelow.y,
+                this.textBoxBelow.width,
+                this.textBoxBelow.height);
+    }
+
+    this.textBoxBelow.outline(context, "#000000");
+    
+    context.textAlign = "center";
+    context.fillStyle = color;
+    context.font = "13px Arial";
+
+    context.fillText(this.textBelow,
+            this.textBoxBelow.x + this.textBoxBelow.width / 2,
+            this.textBoxBelow.y + this.textBoxBelow.height - 4);
+
+    context.stroke();
+    context.restore();
+};
+
+/**
  * Method to draw the textbox onto a canvas
  * @param {type} context the canvas to draw on
  * @param {type} color the color of the text
@@ -124,7 +228,9 @@ TextBox.prototype.drawText = function (context, color) {
  */
 TextBox.prototype.render = function (context, color) {
     "use strict";
+    this.drawTextAbove(context, color);
     this.drawText(context, color);
+    this.drawTextBelow(context, color);
 };
 
 TextBox.prototype.setNote = function (note) {
