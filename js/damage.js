@@ -380,10 +380,10 @@ Damage.prototype.drawRemanenteRadicular = function (context, settings) {
     context.font = "20px Arial Bold";
 
     if (this.type === 0) {
-        context.fillText("RR", this.rect.x + this.rect.width / 2,
+        context.fillText("ABR", this.rect.x + this.rect.width / 2,
                 this.rect.y + this.rect.height / 2);
     } else {
-        context.fillText("RR", this.rect.x + this.rect.width / 2,
+        context.fillText("ABR", this.rect.x + this.rect.width / 2,
                 this.rect.y + this.rect.height / 2);
     }
 
